@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="com.lanling.testpro.bean.Buyer" alias="Buyer"/>
+        <typeAlias type="com.lanling.testpro.query.BuyerQuery" alias="BuyerQuery"/>
+    </typeAliases>
+
+    <environments default="development">
+    <environment id="development">
+        <transactionManager type="JDBC" />
+        <dataSource type="POOLED">  <!-- 数据源的配置，连接到数据库 -->
+            <property name="driver" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost:3306/lanling" />
+            <property name="username" value="root" />
+            <property name="password" value="root" />
+        </dataSource>
+    </environment>
+    </environments>
+
+    <!-- Continue going here -->
+
+
+    <mappers>
+        <mapper resource="com/lanling/testpro/dao/impl/DeptMapper.xml"/>
+        <mapper resource="com/lanling/testpro/dao/impl/BuyerDao.xml"/>
+    </mappers>
+
+</configuration>

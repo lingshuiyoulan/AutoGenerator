@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 数据库驱动包位置 -->
+	<classPathEntry location="C:\\Users\\Administrator\\.m2\\repository\\mysql\\mysql-connector-java\\5.1.38/mysql-connector-java-5.1.38.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+	
+		<commentGenerator>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 --> 
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 数据库链接URL、用户名、密码 -->
+		<!--connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=UTC&amp;useSSL=true"-->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/lanling"
+			userId="root"
+			password="root">
+		</jdbcConnection>
+		<javaTypeResolver>
+		<!--  默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer; true，把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal-->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator targetPackage="com.lanling.testpro.bean"
+			targetProject="src/main/java">
+			<!-- 是否对model添加 构造函数 -->  
+            <property name="constructorBased" value="true"/>  
+			<!-- 是否允许子包，即targetPackage.schemaName.tableName -->  
+			<property name="enableSubPackages" value="true" />
+			<!-- 建立的Model对象是否不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->  
+            <property name="immutable" value="false"/> 
+			 <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- 生成的映射文件包名和位置 -->
+		<sqlMapGenerator targetPackage="com.lanling.testpro.dao.impl"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成映射文件（Mapper/DAO）的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.lanling.testpro.dao" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+		<!--要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
+		<table tableName="dept" domainObjectName="Dept"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false" />
+	</context>
+</generatorConfiguration>
