@@ -5,6 +5,7 @@ import com.lanling.generator.database.Field;
 import com.lanling.generator.database.Table;
 import com.lanling.generator.database.Type;
 import com.lanling.utils.IntrospectUtil;
+import com.lanling.utils.JarsLoader;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args) {
-        Database database = IntrospectUtil.getTableList(0, "lanling", "jdbc:mysql://localhost:3306/lanling?useSSL=true", "root", "lanling");
+        Database database = IntrospectUtil.getTableList(0, "lanling", "jdbc:mysql://localhost:3306/lanling?useSSL=true", "root", "root");
         List<Table> tableList = database.getTableList();
         for (Table table:tableList) {
             System.out.println(table.getName());
@@ -31,5 +32,6 @@ public class Test {
     @org.junit.Test
     public void test(){
         System.out.println(Type.getType(-5).name());
+        JarsLoader.loadJars(JarsLoader.mysqlDriver);
     }
 }
