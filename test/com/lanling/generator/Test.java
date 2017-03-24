@@ -3,10 +3,10 @@ package com.lanling.generator;
 import com.lanling.generator.database.Database;
 import com.lanling.generator.database.Field;
 import com.lanling.generator.database.Table;
-import com.lanling.generator.database.Type;
-import com.lanling.utils.IntrospectUtil;
-import com.lanling.utils.JarsLoader;
+import com.lanling.utils.*;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,8 +16,26 @@ import java.util.List;
  *         on 2017-03-18
  */
 public class Test {
-    public static void main(String[] args) {
-        Database database = IntrospectUtil.getTableList(0, "lanling", "jdbc:mysql://localhost:3306/lanling?useSSL=true", "root", "root");
+
+    public static final String mysqlDriver = "D:/Util/JAR/mysql-connector-java-5.1.38.jar";
+
+    @org.junit.Test
+    public void test() throws SQLException {
+
+        ClassLoader classLoader = ClassLoaderUtil.getCustomClassloader(mysqlDriver);
+        ObjectFactory.addExternalClassLoader(classLoader);
+
+        JDBCConnectionConfig config = new JDBCConnectionConfig();
+        config.setConnectionURL("jdbc:mysql://localhost:3306/lanling?useSSL=true");
+        config.setDriverClass(DatabaseDriver.MYSQL.getDriverClassName());
+        config.setUserId("root");
+        config.setPassword("lanling");
+
+        JDBCConnectionUtil jdbcConnectionUtil = new JDBCConnectionUtil(config);
+
+        Connection connection = jdbcConnectionUtil.getConnection();
+
+        Database database = IntrospectUtil.getTableList(connection);
         List<Table> tableList = database.getTableList();
         for (Table table:tableList) {
             System.out.println(table.getName());
@@ -27,11 +45,5 @@ public class Test {
             }
             System.out.println();
         }
-    }
-
-    @org.junit.Test
-    public void test(){
-        System.out.println(Type.getType(-5).name());
-        JarsLoader.loadJars(JarsLoader.mysqlDriver);
     }
 }

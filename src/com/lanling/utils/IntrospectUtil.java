@@ -18,11 +18,8 @@ import java.util.List;
  *         on 2017-03-18
  */
 public class IntrospectUtil {
-    public static Database getTableList(int databaseType, String dbName, String url, String username, String password) {
-        Connection conn = DBConnUtil.getConnection(databaseType, url, username, password);
+    public static Database getTableList(Connection conn) {
         Database db = new Database();
-        db.setName(dbName);
-        db.setType(databaseType);
         List<Table> tableList = new ArrayList<>();
         db.setTableList(tableList);
         Table table = null;
@@ -54,12 +51,12 @@ public class IntrospectUtil {
                     field.setType(fieldType);
                 }
                 tableTemp.setFieldList(fieldList);
-                DBConnUtil.free(null, null, columns);
+                JDBCConnectionUtil.free(null, null, columns);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            DBConnUtil.free(conn, null, tables);
+            JDBCConnectionUtil.free(conn, null, tables);
         }
         return db;
     }
